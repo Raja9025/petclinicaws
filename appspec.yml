@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: /spring-petclinic-2.6.0-SNAPSHOT.jar
+  - source: target/spring-petclinic-2.6.0-SNAPSHOT.jar
     destination: /tmp/
 hooks:
   ApplicationStart:
