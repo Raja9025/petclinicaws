@@ -20,5 +20,12 @@ jobs:
         branch: actions
         base: master
         delete-branch: true
+        
+    - name: create auto approve
+      uses: juliangruber/merge-pull-request-action@v1
+      with:
+        github-token: ${{ secrets.TEST_SECRET }}
+        number: ${{ steps.cpr.outputs.pull-request-number }} 
+    
     
     
