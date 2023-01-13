@@ -2,7 +2,7 @@ name: Auto Pull Request, Approve, and Merge
 on:
   push:
     branches:
-      - master
+      - actions
 jobs:
   create_pull_request:
     runs-on: ubuntu-latest
@@ -17,19 +17,19 @@ jobs:
         token: ${{ secrets.TEST_SECRET }}
         commit-message: 'Automatically created pull request'
         title: 'Auto Pull Request'
-        branch: actions
+        head: actions
         base: master
         labels: 'auto-merge'
     
     - name: create auto approve
-      uses: juliangruber/approve-pull-request-action@v2
+      uses: juliangruber/approve-pull-request-action@v1
       with:
         github-token: ${{ secrets.TEST_SECRET }}
-        number: ${{ steps.cpr.pull-request-number }}  
+        number: ${{ steps.cpr.outputs.pull-request-number }}  
         
     - name: Enable Pull Request Automerge
-      uses: peter-evans/enable-pull-request-automerge@v2
+      uses: juliangruber/merge-pull-request-action@v1
       with:
-        token: ${{ secrets.TEST_SECRET }}
+        github-token: ${{ secrets.TEST_SECRET }}
         pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
         merge-method: squash
