@@ -12,7 +12,7 @@ jobs:
       
     - name: Create pull request
       id: cpr
-      uses: peter-evans/create-pull-request@v3
+      uses: repo-sync/pull-request@v2
       with:
         token: ${{ secrets.TEST_SECRET }}
         commit-message: 'Automatically created pull request'
