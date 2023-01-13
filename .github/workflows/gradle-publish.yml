@@ -17,9 +17,9 @@ jobs:
         token: ${{ secrets.TEST_SECRET }}
         commit-message: 'Automatically created pull request'
         title: 'Auto Pull Request'
-        head: actions
+        branch: actions
         base: master
-        labels: 'auto-merge'
+        delete-branch: true
     
     - name: create auto approve
       uses: juliangruber/approve-pull-request-action@v1
@@ -31,5 +31,5 @@ jobs:
       uses: juliangruber/merge-pull-request-action@v1
       with:
         github-token: ${{ secrets.TEST_SECRET }}
-        pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+        number: ${{ steps.cpr.outputs.pull-request-number }}
         merge-method: squash
