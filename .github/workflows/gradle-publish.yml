@@ -21,6 +21,18 @@ jobs:
         base: master
         delete-branch: true
         
+    - uses: juliangruber/merge-pull-request-action@v1
+      name: create auto approve
+      with:
+        github-token: ${{ secrets.TEST_SECRET }}
+        number: ${{ steps.cpr.outputs.pr_number }}              
+    - name: Merge pull request
+      if: steps.cpr.outputs.pr_number == 'created'
+      uses: peter-evans/enable-pull-request-automerge@v2
+      with:
+        token: ${{ secrets.TEST_SECRET }}
+        pull-request-number: ${{ steps.cpr.outputs.pr_number }}
+        
    
     
     
