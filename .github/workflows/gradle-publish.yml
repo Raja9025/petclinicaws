@@ -7,12 +7,12 @@ jobs:
   create_pull_request:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       name: checkout
       
     - name: Create pull request
-      id: create_pull_request
-      uses: repo-sync/pull-request@v2
+      id: cpr
+      uses: peter-evans/create-pull-request@v3
       with:
         token: ${{ secrets.TEST_SECRET }}
         commit-message: 'Automatically created pull request'
@@ -20,14 +20,18 @@ jobs:
         head: actions
         base: master
         labels: 'auto-merge'
-    - uses: juliangruber/merge-pull-request-action@v1
-      name: create auto approve
+    
+    - name: create auto approve
+      if: steps.cpr.outputs.pull-request-operation == 'created'
+      uses: juliangruber/approve-pull-request-action@v2
       with:
         github-token: ${{ secrets.TEST_SECRET }}
-        number: ${{ steps.create_pull_request.outputs.pull-request-number }}              
-    - name: Merge pull request
-      if: steps.create_pull_request.outputs.pull-request-number == 'created'
+        number: ${{ steps.cpr.pull-request-number }}  
+        
+    - name: Enable Pull Request Automerge
+      if: steps.cpr.outputs.pull-request-operation == 'created'
       uses: peter-evans/enable-pull-request-automerge@v2
       with:
         token: ${{ secrets.TEST_SECRET }}
-        pull-request-number: ${{ steps.create_pull_request.outputs.pull-request-number }}
+        pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+        merge-method: squash
