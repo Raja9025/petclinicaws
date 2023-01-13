@@ -32,6 +32,7 @@ jobs:
       with:
         token: ${{ secrets.TEST_SECRET }}
         pull-request-number: ${{ steps.cpr.outputs.pr_number }}
+        method: squash
         
    
     
