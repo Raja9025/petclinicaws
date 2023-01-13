@@ -2,12 +2,12 @@ name: Auto Pull Request, Approve, and Merge
 on:
   push:
     branches:
-      - actions
+      - master
 jobs:
   create_pull_request:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
       name: checkout
       
     - name: Create pull request
@@ -17,7 +17,7 @@ jobs:
         token: ${{ secrets.TEST_SECRET }}
         commit-message: 'Automatically created pull request'
         title: 'Auto Pull Request'
-        head: actions
+        branch: actions
         base: master
         labels: 'auto-merge'
     
