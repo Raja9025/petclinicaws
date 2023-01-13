@@ -20,11 +20,6 @@ jobs:
         head: actions
         base: master
         labels: 'auto-merge'
-  auto-approve:
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-    steps:
     - uses: juliangruber/merge-pull-request-action@v1
       name: create auto approve
       with:
