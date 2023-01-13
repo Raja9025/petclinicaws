@@ -12,7 +12,7 @@ jobs:
       
     - name: Create pull request
       id: cpr
-      uses: repo-sync/pull-request@v2
+      uses: peter-evans/create-pull-request@v3
       with:
         token: ${{ secrets.TEST_SECRET }}
         commit-message: 'Automatically created pull request'
@@ -21,11 +21,6 @@ jobs:
         base: master
         delete-branch: true
         
-    - name: create auto approve
-      uses: juliangruber/merge-pull-request-action@v1
-      with:
-        github-token: ${{ secrets.TEST_SECRET }}
-        number: ${{ steps.cpr.outputs.pull-request-number }} 
-    
+   
     
     
