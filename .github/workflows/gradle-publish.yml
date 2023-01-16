@@ -33,7 +33,7 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.TEST_SECRET }}
       run: |
-         git push origin actions:actions && git push origin actions:actions
+         git push origin master:actions && git push origin master:actions 
           
     - name: Create pull request
       id: cpr
@@ -59,6 +59,7 @@ jobs:
         pull-request-number: ${{ steps.cpr.outputs.pr_number }}
         method: squash
         
+   
    
     
     
